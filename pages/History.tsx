@@ -68,6 +68,15 @@ const HistoryPage: React.FC<Props> = ({ history, setCurrentPlant, setLastImage, 
             </div>
           </div>
         ))}
+        {history.length === 0 && (
+          <div className="col-span-full py-32 text-center border-2 border-dashed border-stone-200 dark:border-stone-800 rounded-[3rem] bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm animate-in fade-in zoom-in-95">
+             <div className="h-24 w-24 bg-stone-100/50 dark:bg-stone-800/50 rounded-full flex items-center justify-center mx-auto mb-6 text-stone-300 dark:text-stone-600" title="No journal entries yet">
+                <Sprout size={48} strokeWidth={1} />
+             </div>
+             <h3 className="text-2xl font-serif font-bold text-stone-400 dark:text-stone-500 mb-2">Begin Your Collection</h3>
+             <p className="text-stone-400 dark:text-stone-600 font-medium max-w-sm mx-auto px-6">Snap a photo of your first plant to start your botanical legacy.</p>
+          </div>
+        )}
       </div>
     </div>
   );
