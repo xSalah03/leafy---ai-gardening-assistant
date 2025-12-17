@@ -1,17 +1,19 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Leaf, Search, MessageSquare, History, Bell, Sun, Moon, Monitor } from 'lucide-react';
 
 type Theme = 'light' | 'dark' | 'system';
 
 interface HeaderProps {
-  activeTab: 'home' | 'chat' | 'history' | 'reminders';
-  setActiveTab: (tab: 'home' | 'chat' | 'history' | 'reminders') => void;
   pendingCount: number;
   theme: Theme;
   setTheme: (theme: Theme) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pendingCount, theme, setTheme }) => {
+const Header: React.FC<HeaderProps> = ({ pendingCount, theme, setTheme }) => {
+  const location = useLocation();
+  const activeTab = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+
   const toggleTheme = () => {
     if (theme === 'system') setTheme('light');
     else if (theme === 'light') setTheme('dark');
@@ -30,42 +32,43 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pendingCount, 
     return "Currently: Dark Mode. Click for System Mode.";
   };
 
+  const navItemClass = (path: string) => {
+    const isActive = location.pathname === path;
+    return `flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-bold transition-all ${
+      isActive 
+        ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 shadow-sm' 
+        : 'text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
+    }`;
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white/70 dark:bg-stone-900/80 backdrop-blur-xl border-b border-stone-100 dark:border-stone-800 transition-colors duration-300">
       <div className="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
-        <div 
+        <Link 
+          to="/" 
           className="flex items-center gap-3 cursor-pointer group" 
-          onClick={() => setActiveTab('home')}
           title="Return to Leafy Home"
         >
           <div className="bg-emerald-600 dark:bg-emerald-500 p-2 rounded-xl text-white shadow-lg shadow-emerald-200 dark:shadow-emerald-900/20 group-hover:scale-105 transition-transform">
             <Leaf size={24} />
           </div>
           <span className="font-serif text-2xl font-bold tracking-tight text-emerald-900 dark:text-emerald-100">Leafy</span>
-        </div>
+        </Link>
         
         <nav className="flex items-center gap-1 sm:gap-4">
-          <button 
-            onClick={() => setActiveTab('home')}
+          <Link 
+            to="/"
             title="Search and identify plants with AI"
-            className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-bold transition-all ${
-              activeTab === 'home' 
-                ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 shadow-sm' 
-                : 'text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
-            }`}
+            className={navItemClass('/')}
           >
             <Search size={18} />
             <span className="hidden md:inline">Identify</span>
-          </button>
+          </Link>
           
-          <button 
-            onClick={() => setActiveTab('reminders')}
+          <Link 
+            to="/reminders"
             title="View your plant care schedules and reminders"
-            className={`relative flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-bold transition-all ${
-              activeTab === 'reminders' 
-                ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 shadow-sm' 
-                : 'text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
-            }`}
+            className={`relative ${navItemClass('/reminders')}`}
           >
             <Bell size={18} />
             <span className="hidden md:inline">Care</span>
@@ -74,33 +77,25 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, pendingCount, 
                 {pendingCount}
               </span>
             )}
-          </button>
+          </Link>
 
-          <button 
-            onClick={() => setActiveTab('chat')}
+          <Link 
+            to="/chat"
             title="Chat with Leafy AI Botanist"
-            className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-bold transition-all ${
-              activeTab === 'chat' 
-                ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 shadow-sm' 
-                : 'text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
-            }`}
+            className={navItemClass('/chat')}
           >
             <MessageSquare size={18} />
             <span className="hidden md:inline">Chat</span>
-          </button>
+          </Link>
           
-          <button 
-            onClick={() => setActiveTab('history')}
+          <Link 
+            to="/history"
             title="View your botanical journal and history"
-            className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-bold transition-all ${
-              activeTab === 'history' 
-                ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 shadow-sm' 
-                : 'text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
-            }`}
+            className={navItemClass('/history')}
           >
             <History size={18} />
             <span className="hidden md:inline">Journal</span>
-          </button>
+          </Link>
 
           <div className="w-[1px] h-6 bg-stone-200 dark:bg-stone-800 mx-1" />
 
