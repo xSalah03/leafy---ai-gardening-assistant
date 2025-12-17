@@ -169,10 +169,8 @@ const ChatInterface: React.FC = () => {
 
       {/* Messages Area */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6 space-y-6 bg-stone-50/20 dark:bg-stone-950/20 scrollbar-hide relative">
-        {messages.length === 0 && (
-           <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center animate-in fade-in zoom-in-95 duration-500">
-             <div className="h-24 w-24 bg-white dark:bg-stone-800 rounded-[2rem] flex items-center justify-center mb-6 text-emerald-500 dark:text-emerald-400 shadow-xl shadow-emerald-500/5 border border-white dark:border-stone-700">
-                <Bot size={48} strokeWidth={1.5} />
+{messages.length === 0 && (           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-in fade-in zoom-in-95 duration-500">
+     <div className="h-24 w-24 bg-white dark:bg-stone-800 rounded-[2rem] flex items-center justify-center mb-6 text-emerald-500 dark:text-emerald-400 shadow-xl shadow-emerald-500/5 border border-white dark:border-stone-700"><Bot size={48} strokeWidth={1.5} />
              </div>
              <h3 className="text-3xl font-serif font-bold text-stone-900 dark:text-stone-100 mb-3">Hello, Gardener!</h3>
              <p className="text-stone-500 dark:text-stone-400 font-medium max-w-md mb-8 leading-relaxed">
