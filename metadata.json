@@ -1,0 +1,7 @@
+{
+  "name": "Leafy - AI Gardening Assistant",
+  "description": "A professional AI-powered gardening companion that identifies plants from photos, provides expert care instructions, and offers a real-time chat for all your botanical questions.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
