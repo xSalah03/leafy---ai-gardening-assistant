@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Header from './components/Header';
 import { PlantDetails, Reminder } from './types';
 import { identifyPlant } from './services/geminiService';
@@ -96,6 +97,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-stone-50/50 dark:bg-stone-950 transition-colors duration-300">
       <Analytics />
+      <SpeedInsights />
       <Header 
         pendingCount={pendingRemindersCount}
         theme={theme}
